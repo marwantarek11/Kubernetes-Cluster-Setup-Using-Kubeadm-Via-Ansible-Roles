@@ -116,8 +116,10 @@ This project provides a comprehensive approach to deploying a Kubernetes cluster
 ## Verify Kubernetes Cluster & Ansible PlayBook
 
 - PlayBook Verification
+  
    ![image](https://github.com/user-attachments/assets/2109590e-136d-46f2-8034-09b8f9da2edd)
 
 - Cluster Verification
+  
    ![image](https://github.com/user-attachments/assets/e5690057-dcf5-419d-b4e8-41aa545498ad)
 
