@@ -1,0 +1,45 @@
+---
+- name: Setup Kubernetes Cluster
+  hosts: all
+  become: yes
+  vars_files:
+    - vars/main.yml
+  roles:
+    - common
+
+- name: Initialize Kubernetes Master
+  hosts: master
+  become: yes
+  vars_files:
+    - vars/main.yml
+  roles:
+    - master
+
+- name: Join Kubernetes Worker Nodes
+  hosts: worker
+  become: yes
+  vars_files:
+    - vars/main.yml
+  roles:
+    - worker
+
+- name: Verify Kubernetes Cluster
+  hosts: master
+  become: yes
+  tasks:
+    - name: Verify Cluster Info
+      command: kubectl cluster-info
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config
+      register: cluster_info
+
+    - name: Verify Node Status
+      command: kubectl get nodes
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config
+      register: node_status
+
+    - debug:
+        msg:
+          - "Cluster Info: {{ cluster_info.stdout }}"
+          - "Node Status: {{ node_status.stdout }}"

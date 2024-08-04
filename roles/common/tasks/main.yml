@@ -1,0 +1,98 @@
+---
+- name: Update and upgrade APT packages
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Disable swap
+  ansible.builtin.shell: |
+    swapoff -a
+    sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+
+- name: Load kernel modules
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/containerd.conf
+    content: |
+      overlay
+      br_netfilter
+
+- name: Load overlay module
+  ansible.builtin.modprobe:
+    name: overlay
+
+- name: Load br_netfilter module
+  ansible.builtin.modprobe:
+    name: br_netfilter
+
+- name: Set kernel parameters for Kubernetes
+  ansible.builtin.copy:
+    dest: /etc/sysctl.d/kubernetes.conf
+    content: |
+      net.bridge.bridge-nf-call-ip6tables = 1
+      net.bridge.bridge-nf-call-iptables = 1
+      net.ipv4.ip_forward = 1
+
+- name: Apply sysctl parameters
+  ansible.builtin.command: sysctl --system
+
+- name: Install dependencies
+  ansible.builtin.apt:
+    name: "{{ dependencies }}"
+    state: present
+    update_cache: yes
+
+- name: Add Docker GPG key
+  ansible.builtin.apt_key:
+    url: "{{ docker_gpg_key_url }}"
+    state: present
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: "{{ docker_repo }}"
+    state: present
+
+- name: Install containerd
+  ansible.builtin.apt:
+    name: "{{ containerd_package }}"
+    state: present
+    update_cache: yes
+
+- name: Configure containerd
+  ansible.builtin.command: containerd config default
+  register: containerd_config
+
+- name: Set value of SystemdCgroup
+  ansible.builtin.shell: |
+    containerd config default | sudo tee /etc/containerd/config.toml | grep SystemdCgroup
+    sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
+
+- name: Restart and enable containerd
+  ansible.builtin.systemd:
+    name: containerd
+    enabled: yes
+    state: restarted
+
+- name: Add Kubernetes GPG key
+  ansible.builtin.apt_key:
+    url: "{{ kubernetes_gpg_key_url }}"
+    state: present
+    keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+- name: Add Kubernetes repository
+  ansible.builtin.apt_repository:
+    repo: "{{ kubernetes_repo }}"
+    state: present
+    filename: kubernetes.list
+
+- name: Install Kubernetes components
+  ansible.builtin.apt:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+    update_cache: yes
+
+- name: Hold Kubernetes components
+  ansible.builtin.command:
+    cmd: apt-mark hold kubelet kubeadm kubectl

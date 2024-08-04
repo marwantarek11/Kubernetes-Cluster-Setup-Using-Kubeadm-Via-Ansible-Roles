@@ -1,0 +1,11 @@
+---
+dependencies:
+  - curl
+  - gnupg
+  - software-properties-common
+  - ca-certificates
+docker_gpg_key_url: "https://download.docker.com/linux/ubuntu/gpg"
+docker_repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_codename }} stable"
+containerd_package: "containerd.io"
+kubernetes_gpg_key_url: "https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key"
+kubernetes_repo: 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /'
