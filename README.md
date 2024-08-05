@@ -133,11 +133,16 @@ This project provides a comprehensive approach to deploying a Kubernetes cluster
 
 ## Verify Kubernetes Cluster & Ansible PlayBook(Ubnutu-RedHat)
 
-- PlayBook Verification
+- Verification For Ubnutu 
   
-   ![image](https://github.com/user-attachments/assets/2109590e-136d-46f2-8034-09b8f9da2edd)
+   ![result as Ubuntu](https://github.com/user-attachments/assets/b3bc6c5e-6934-4f9d-b905-119309e4becb)
+   ![result as Ubnutu 1](https://github.com/user-attachments/assets/9a093e7d-0868-4956-9479-abf64384c020)
 
-- Cluster Verification
+
+- Verification For RedHat
   
-   ![image](https://github.com/user-attachments/assets/e5690057-dcf5-419d-b4e8-41aa545498ad)
+  ![result as redhat](https://github.com/user-attachments/assets/051fef58-9ded-43a0-af12-a5b7839a7023)
+  ![result as redhat 1](https://github.com/user-attachments/assets/4656d281-f6be-467d-a2f9-c5b7e0ac7c57)
+
+
 
