@@ -131,7 +131,7 @@ This project provides a comprehensive approach to deploying a Kubernetes cluster
 - **Logs:**
   - Review the Ansible output logs for detailed error messages and stack traces.
 
-## Verify Kubernetes Cluster & Ansible PlayBook
+## Verify Kubernetes Cluster & Ansible PlayBook(Ubnutu-RedHat)
 
 - PlayBook Verification
   
