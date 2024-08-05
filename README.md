@@ -20,24 +20,42 @@ This project provides a comprehensive approach to deploying a Kubernetes cluster
 ## Project Structure
 
 ```bash
-.
 ├── ansible.cfg
-├── inventory
-├── playbook.yml
+├── inventory-Debian
+├── inventory-RedHat
+├── master.yml
+├── playbooks
 ├── roles
-│   ├── common
-│   │   ├── defaults
-│   │   │   └── main.yml
-│   │   ├── tasks
-│   │   │   └── main.yml
-│   ├── master
-│   │   ├── tasks
-│   │   │   └── main.yml
-│   ├── worker
-│   │   ├── tasks
-│   │   │   └── main.yml
-└── vars
-    └── main.yml
+│   ├── common
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   └── vars
+│   │       └── main.yml
+│   ├── containerd
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   ├── templates
+│   │   │   └── config.toml.j2
+│   │   └── vars
+│   │       └── main.yml
+│   ├── kubernetes
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   └── vars
+│   │       └── main.yml
+│   ├── master
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   └── vars
+│   │       └── main.yml
+│   └── worker
+│       ├── tasks
+│       │   └── main.yml
+│       └── vars
+│           └── main.yml
+├── site.yml
+├── test.pem
+└── workers.yml
 ```
 
 ## Installation
