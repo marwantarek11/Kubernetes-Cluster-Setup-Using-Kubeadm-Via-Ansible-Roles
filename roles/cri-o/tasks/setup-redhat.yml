@@ -1,0 +1,22 @@
+---
+- name: Add the CRI-O repository
+  template:
+    src: cri-o.repo.j2
+    dest: /etc/yum.repos.d/cri-o.repo
+
+- name: Install package dependencies
+  dnf:
+    name: container-selinux
+    state: present
+
+- name: Install CRI-O
+  dnf:
+    name: 
+      - cri-o
+    state: present
+
+- name: Start CRI-O service
+  systemd:
+    name: crio.service
+    state: started
+    enabled: yes

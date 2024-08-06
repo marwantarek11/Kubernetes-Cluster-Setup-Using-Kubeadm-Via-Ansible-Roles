@@ -1,0 +1,52 @@
+---
+- name: Install dependencies for adding repositories
+  apt:
+    name: 
+      - software-properties-common
+      - curl
+    state: present
+    update_cache: yes
+  become: yes   
+
+- name: Add Kubernetes GPG key
+  ansible.builtin.apt_key:
+    url: "{{ kubernetes_gpg_key_Debian_url }}"
+    state: present
+    keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg    
+  become: yes 
+
+- name: Add Kubernetes repository
+  ansible.builtin.apt_repository:
+    repo: "{{ kubernetes_repo_debian }}"
+    state: present
+    filename: kubernetes.list    
+  become: yes  
+
+- name: Add the CRI-O GPG key
+  ansible.builtin.apt_key:
+    url: "{{ cri_o_gpg_key_debian_url }}"
+    state: present
+    keyring: "{{ cri_o_gpg_key_path }}"
+  become: yes  
+
+- name: Add the CRI-O repository
+  ansible.builtin.lineinfile:
+    path: "{{ cri_o_repo_list_path }}"
+    line: "{{ cri_o_repo_debian }}"
+    create: yes
+  become: yes
+
+- name: Install CRI-O
+  apt:
+    name: 
+      - cri-o
+    state: present
+    update_cache: yes
+  become: yes  
+
+- name: Start CRI-O service
+  systemd:
+    name: crio.service
+    state: started
+    enabled: yes
+  become: yes  

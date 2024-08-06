@@ -1,0 +1,5 @@
+---
+- name: Install Weave Net
+  ansible.builtin.command: kubectl apply -f {{ weave_net_manifest_url }}
+  environment:
+    KUBECONFIG: /home/{{ ansible_user }}/.kube/config

@@ -1,0 +1,5 @@
+---
+- name: Install Flannel
+  ansible.builtin.command: kubectl apply -f {{ flannel_manifest_url }}
+  environment:
+    KUBECONFIG: /home/{{ ansible_user }}/.kube/config

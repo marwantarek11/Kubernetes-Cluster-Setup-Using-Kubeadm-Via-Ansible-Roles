@@ -1,0 +1,5 @@
+---
+- name: Install Calico
+  ansible.builtin.command: kubectl apply -f {{ calico_manifest_url }}
+  environment:
+    KUBECONFIG: /home/{{ ansible_user }}/.kube/config

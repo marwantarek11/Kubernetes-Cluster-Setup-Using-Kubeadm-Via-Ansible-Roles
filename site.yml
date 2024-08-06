@@ -1,0 +1,33 @@
+- name: Setup Kubernetes Cluster
+  hosts: all
+  become: yes
+  vars_prompt:
+    - name: "container_runtime"
+      prompt: "Which container runtime do you want to use? (containerd/cri-o)"
+      private: no
+
+    - name: "cni_choice"
+      prompt: "Which CNI would you like to install? (Options: calico, canal, flannel, weave_net)"
+      private: no
+
+  roles:
+    - role: common
+    - role: containerd
+      when: container_runtime == "containerd"
+    - role: cri-o
+      when: container_runtime == "cri-o"  
+    - role: kubernetes
+  
+- name: Setup Kubernetes Master Node
+  hosts: master
+  become: yes
+  roles:
+    - role: master
+    - role: cni
+    
+- name: Setup Kubernetes Worker Nodes
+  hosts: workers
+  become: yes
+  roles:
+    - role: worker
+    

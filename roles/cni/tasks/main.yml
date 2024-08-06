@@ -1,0 +1,7 @@
+---
+- name: Set the CNI to use
+  set_fact:
+    cni_choice: "{{ cni_choice }}"
+
+- name: Include the CNI specific tasks
+  include_tasks: "{{ cni_choice }}.yml"

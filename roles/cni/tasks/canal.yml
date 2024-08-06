@@ -1,0 +1,5 @@
+---
+- name: Install Canal
+  ansible.builtin.command: kubectl apply -f {{ canal_manifest_url }}
+  environment:
+    KUBECONFIG: /home/{{ ansible_user }}/.kube/config

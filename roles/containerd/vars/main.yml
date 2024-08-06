@@ -1,0 +1,5 @@
+docker_gpg_key_Debian_url: "https://download.docker.com/linux/ubuntu/gpg"
+docker_gpg_key_RedHat_url: "https://download.docker.com/linux/rhel/gpg"
+docker_repo_debian: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+docker_repo_redhat: "https://download.docker.com/linux/rhel/docker-ce.repo"
+containerd_config_file: "/etc/containerd/config.toml"
