@@ -1,5 +1,0 @@
-- name: Setup Kubernetes Worker Nodes
-  hosts: workers
-  become: yes
-  roles:
-    - role: worker
